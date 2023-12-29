@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation';
 
+
 const CreateFreelancer = () => {
     const router = useRouter()
     const [fullName, setFullName] = useState('');
@@ -22,13 +23,12 @@ const CreateFreelancer = () => {
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json"
-
                 },
                 body:JSON.stringify({email})
             })
             const user = await resUserExists.json()
 
-            if (user) {
+            if (user.user !== null) {
                 setError("User Already Exists")
                 return;
             }
@@ -45,6 +45,7 @@ const CreateFreelancer = () => {
             })
             if (res.ok) {
                 e.target.reset()
+                router.push("/login")
             } else {
                 console.log("user registiration failed")
             }
