@@ -2,16 +2,34 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Login = () => {
+    const router = useRouter()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error,setError] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Burada login işlemleri gerçekleştirilecek
-        console.log('Email:', email);
-        console.log('Password:', password);
+        
+        try {
+            const res = await signIn('credentials',{
+                email,
+                password,
+                redirect:false
+            })
+
+            if (res.error){
+                setError("Invalid Credentials")
+                return; 
+            }
+            router.push("/dashboard")
+        } catch (error) {
+            console.log(error)
+        }
     };
     return (
         <div className='flex items-center justify-center h-screen w-full'>
@@ -48,7 +66,16 @@ const Login = () => {
                     <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md w-full">
                         Login
                     </button>
+                    
+
+                    {error && (
+                        <div className='bg-red-500 mt-4 px-4 py-2 text-xl rounded-md flex justify-center items-center w-2/3 mx-auto animate-pulse'>
+                            {error}
+                        </div>
+                    )}
                 </form>
+
+                   <h1>Don't you have an account?  <Link href={"/firstPage"} className=" underline">Create one!</Link></h1>
             </motion.div>
         </div>
     )

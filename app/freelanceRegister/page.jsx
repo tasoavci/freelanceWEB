@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 
 const CreateFreelancer = () => {
@@ -13,8 +14,12 @@ const CreateFreelancer = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!fullName || !email || !password) {
-            setError("All fields are necessary")
+        // if (!fullName || !email || !password) {
+        //     setError("All fields are necessary")
+        //     return;
+        // }
+        if(password.length < 8 ){
+            setError("Password must be 8 or more characters");
             return;
         }
 
@@ -40,7 +45,7 @@ const CreateFreelancer = () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    fullName, email, password,
+                    fullName, email, password, type: "freelance"
                 })
             })
             if (res.ok) {
@@ -103,7 +108,7 @@ const CreateFreelancer = () => {
                     </button>
                     <div>
                         {/* already */}
-                        <h1 className='text-sm text-center'>Already have an account? <button onClick={() => { router.push('/Login') }} className=' underline'>Log in</button></h1>
+                        <h1 className='text-sm text-center'>Already have an account? <button onClick={() => { router.push('/login') }} className=' underline'>Log in</button></h1>
                     </div>
                     {error && (
                         <div className='bg-red-500 mt-2 px-4 py-2 text-xl rounded-md flex justify-center items-center w-2/3 mx-auto animate-pulse'>
@@ -113,6 +118,7 @@ const CreateFreelancer = () => {
 
                     }
                 </form>
+                <Link href={"/firstPage"} className="bg-gray-700 text-white px-8 py-2 mt-3 rounded-md">Go back</Link>
 
 
             </motion.div>
