@@ -1,6 +1,6 @@
 "use client";
 import { motion } from 'framer-motion'
-import React from 'react'
+import React, { useState } from 'react'
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -9,6 +9,7 @@ const Dashboard = () => {
     const { data: session } = useSession()
     const formattedDate = new Date(session.user.createdAt).toLocaleDateString('tr-TR');
     const router = useRouter()
+    
 
     const goCheckJobs = () =>{
         router.push("/checkJobs")
@@ -40,6 +41,8 @@ const Dashboard = () => {
         <div className='w-2/3 mx-auto flex justify-center items-center'>
             <button onClick={() => signOut()} className='bg-red-500 rounded-md text-2xl px-10 py-1 mb-4'>Log out</button>
         </div>
+        <div className='absolute top-0 right-0 bg-green-500 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'>Balance: {session?.user?.balance}$</div>
+
 </motion.div>
 </div>
   )

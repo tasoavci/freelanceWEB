@@ -1,3 +1,4 @@
+// clientAddJobs/page.jsx
 "use client";
 import { motion } from 'framer-motion'
 import React from 'react'
@@ -5,6 +6,7 @@ import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const ClientAddJobs = () => {
     const router = useRouter()
@@ -13,7 +15,8 @@ const ClientAddJobs = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-  
+    const [balance,setBalance] = useState(session?.user?.balance)
+    console.log(balance)
     const handleNameChange = (e) => {
       setName(e.target.value);
     };
@@ -25,18 +28,14 @@ const ClientAddJobs = () => {
     const handlePriceChange = (e) => {
       setPrice(e.target.value);
     };
-    const handleSubmit = async(e) => {
-        // Verileri burada bir API'ye veya istediğiniz yere gönderebilirsiniz
-        e.preventDefault()
-        // const data = {
-        //   name,
-        //   description,
-        //   price,
-        // };
     
-        // // Örnek olarak konsola yazdırma
-        // console.log('Gönderilen veri:', data);
+
+    
+    const handleSubmit = async(e) => {
+        e.preventDefault()
+        
         try {
+
            
             const res = await fetch('/api/addJob', {
                 method: "POST",
@@ -61,7 +60,42 @@ const ClientAddJobs = () => {
             console.log("error during adding job: ", error);
 
         }
-      };
+        setBalance(balance-price)
+
+    
+        // UPDATE
+        try {
+        const jobPrice = parseInt(price); // Girilen fiyatı sayıya dönüştürün
+        const currentBalance = parseInt(session?.user?.balance); // Mevcut bakiyeyi sayıya dönüştürün
+
+        if (!isNaN(jobPrice) && !isNaN(currentBalance)) {
+            const updatedBalance = currentBalance - jobPrice; // Fiyatı mevcut bakiyeden çıkarın
+            const res = await fetch('/api/updateBalance', {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: session?.user?._id,
+                    balance: updatedBalance
+                })
+            });
+
+            if (res.ok) {
+                console.log("Balance updated successfully");
+                e.target.reset();
+                router.push("/clientJobs");
+            } else {
+                console.log("Updating balance failed");
+            }
+        } else {
+            console.log("Invalid price or balance");
+        }
+    } catch (error) {
+        console.error("Error during updating balance:", error);
+    
+    };}
+      
    
     return (
         <div className='flex items-center justify-center h-screen w-full'>
@@ -128,9 +162,12 @@ const ClientAddJobs = () => {
                 <div className='w-2/3 mx-auto flex justify-center items-center'>
                     <button onClick={() => signOut()} className='bg-red-500 rounded-md text-2xl px-10 py-1 mb-4'>Log out</button>
                 </div>
+
+                <div className='absolute top-0 right-0 bg-green-500 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'>Balance: {balance}$</div>
+
         </motion.div>
         </div>
-          )
+    )
 }
 
 export default ClientAddJobs

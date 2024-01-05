@@ -18,6 +18,10 @@ const userSchema = new Schema({
         type:String,
         required:true,
     },
+    balance: {
+        type:Number,
+        required:true
+    }
 }, { timestamps: true })
 
 const User = models.User || mongoose.model("User", userSchema)

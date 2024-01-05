@@ -14,12 +14,12 @@ const ClientJobs = () => {
     
     const router = useRouter()
     const [jobs, setJobs] = useState([]);
-
-
+    const {data:session} = useSession()
+    
     const goAddJobs = () => {
         router.push("/clientAddJobs")
     }
-
+    
     const deleteJob = async (id) => {
         console.log(id)
         try {
@@ -83,7 +83,7 @@ const ClientJobs = () => {
                 <p className="text-lg">Description: {job.description}</p>
                 <p className="text-lg">Price: {job.price}</p>
                 <button onClick={() => deleteJob(job._id)} className='bg-red-500 text-white rounded-md text-2xl px-4 py-1 absolute top-0 right-0 '>X</button>
-
+                
             </li>
         ))}
     </ul>
@@ -94,6 +94,8 @@ const ClientJobs = () => {
                 <div className='w-2/3 mx-auto flex justify-center items-center'>
                     <button onClick={() => signOut()} className='bg-red-500 rounded-md text-2xl px-10 py-1 mb-4'>Log out</button>
                 </div>
+                <div className='absolute top-0 right-0 bg-green-500 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'>{session?.user?.balance}$</div>
+                
         </motion.div>
         </div>
           )

@@ -49,7 +49,9 @@ const CreateFreelancer = () => {
                     fullName,
                     email,
                     password,
-                    type: "freelance"
+                    type: "freelance",
+                    balance:0
+
                 })
             })
             if (res.ok) {

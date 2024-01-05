@@ -2,11 +2,12 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const Login = () => {
+    const {data:session} = useSession()
     const router = useRouter()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -30,6 +31,9 @@ const Login = () => {
             if (res.error){
                 setError("Invalid Credentials")
                 return; 
+            }
+            if (selectedOption === ''){
+                setError("Fill the radio input correctly")
             }
             if (selectedOption === 'client'){
                 router.push("/dashboardClient")

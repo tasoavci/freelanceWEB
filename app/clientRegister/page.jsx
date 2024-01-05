@@ -44,7 +44,8 @@ const CreateClient = () => {
                     fullName,
                     email,
                     password,
-                    type: "client"
+                    type: "client",
+                    balance:1000
                 })
             })
             if (res.ok) {

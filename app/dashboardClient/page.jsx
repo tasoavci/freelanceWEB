@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 const Dashboard = () => {
     const { data: session } = useSession()
-    const formattedDate = new Date(session.user.createdAt).toLocaleDateString('tr-TR');
+    const formattedDate = new Date(session?.user?.createdAt).toLocaleDateString('tr-TR');
     const router = useRouter()
     const goAddJobs = () =>{
         router.push("/clientJobs")
@@ -20,7 +20,7 @@ const Dashboard = () => {
     initial={{ y: '100vw' }}
     animate={{ y: 0 }}
     transition={{ type: 'spring', stiffness: 120 }}
-    className='w-[60%] h-[60%] border border-slate-400 rounded-2xl shadow-slate-500 relative shadow flex flex-col justify-between p-5 items-center'>
+    className='w-[60%] h-[60%] border border-slate-400 rounded-2xl shadow-slate-500 relative shadow flex flex-col justify-between p-5 items-center '>
         <div className='p-3 flex justify-center items-center w-full'>
             <h1 className='text-3xl font-bold'>Welcome Client!</h1>
         </div>
@@ -39,6 +39,7 @@ const Dashboard = () => {
         <div className='w-2/3 mx-auto flex justify-center items-center'>
             <button onClick={() => signOut()} className='bg-red-500 rounded-md text-2xl px-10 py-1 mb-4'>Log out</button>
         </div>
+        <div className='absolute top-0 right-0 bg-green-500 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'>Balance: {session?.user?.balance}$</div>
 </motion.div>
 </div>
   )
