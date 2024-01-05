@@ -9,11 +9,56 @@ const CreateClient = () => {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        // Burada formun gönderilme işlemlerini gerçekleştirebilirsiniz
-        // Örneğin, form verilerini bir API'ye gönderebilirsiniz
+        
+        if(password.length < 8 ){
+            setError("Password must be 8 or more characters");
+            return;
+        }
+        try {
+            const resUserExists = await fetch('api/userExist', {
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body:JSON.stringify({email})
+            })
+            const user = await resUserExists.json()
+
+            if (user.user !== null) {
+                setError("User Already Exists")
+                return;
+            }
+
+
+            const res = await fetch('/api/register', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    fullName,
+                    email,
+                    password,
+                    type: "client"
+                })
+            })
+            if (res.ok) {
+                console.log(res)
+                e.target.reset()
+                router.push("/login")
+            } else {
+                console.log("user registiration failed")
+                
+            }
+        } catch (error) {
+            console.log("error during registiration: ", error);
+
+        }
     };
     return (
         <div className='flex items-center justify-center h-screen w-full'>
@@ -66,6 +111,11 @@ const CreateClient = () => {
                         {/* already */}
                         <h1 className='text-sm text-center'>Already have an account? <button onClick={() => { router.push('/Login') }} className=' underline'>Log in</button></h1>
                     </div>
+                    {error && (
+                        <div className='bg-red-500 mt-2 px-4 py-2 text-xl rounded-md flex justify-center items-center w-2/3 mx-auto animate-pulse'>
+                            {error}
+                        </div>
+                        )}
                 </form>
 
 

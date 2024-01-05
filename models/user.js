@@ -1,3 +1,4 @@
+// models/user.js
 import mongoose, { models, Schema } from "mongoose";
 
 const userSchema = new Schema({
@@ -14,8 +15,8 @@ const userSchema = new Schema({
         required: true,
     },
     type: {
-        type: String,
-        required: true,
+        type:String,
+        required:true,
     },
 }, { timestamps: true })
 

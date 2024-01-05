@@ -11,7 +11,11 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error,setError] = useState('');
+    const [selectedOption, setSelectedOption] = useState('');
 
+    const handleChange = (e) => {
+        setSelectedOption(e.target.value);
+      };
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -19,14 +23,21 @@ const Login = () => {
             const res = await signIn('credentials',{
                 email,
                 password,
+                
                 redirect:false
             })
-
+            console.log("response: ",res)
             if (res.error){
                 setError("Invalid Credentials")
                 return; 
             }
-            router.push("/dashboard")
+            if (selectedOption === 'client'){
+                router.push("/dashboardClient")
+            }
+            if (selectedOption === 'freelancer'){
+                router.push("/dashboard")
+            }
+
         } catch (error) {
             console.log(error)
         }
@@ -62,6 +73,32 @@ const Login = () => {
                             className="w-full px-4 py-2 border rounded-md bg-gray-700"
                             required
                         />
+                    </div>
+                    <div className='flex justify-center items-center gap-8 mb-10'>
+                        <div className='flex justify-center items-center gap-1'>
+                    <input
+                        className=''
+                        type='radio'
+                        value='client'
+                        checked={selectedOption === 'client'}
+                        onChange={handleChange}>
+                    </input>
+                    <h1 className='text-xl flex justify-center items-center'>
+                        Client
+                    </h1>
+                    </div>
+                    <div  className='flex justify-center items-center gap-1'>
+                    <input
+                        className=''
+                        type='radio'
+                        value='freelancer'
+                        checked={selectedOption === 'freelancer'}
+                        onChange={handleChange}>
+                    </input>
+                    <h1 className='text-xl flex justify-center items-center'>
+                        Freelancer
+                    </h1>
+                    </div>
                     </div>
                     <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md w-full">
                         Login

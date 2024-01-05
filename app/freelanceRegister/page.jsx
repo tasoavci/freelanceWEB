@@ -12,6 +12,7 @@ const CreateFreelancer = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if (!fullName || !email || !password) {
@@ -45,7 +46,10 @@ const CreateFreelancer = () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    fullName, email, password, type: "freelance"
+                    fullName,
+                    email,
+                    password,
+                    type: "freelance"
                 })
             })
             if (res.ok) {
@@ -53,6 +57,7 @@ const CreateFreelancer = () => {
                 router.push("/login")
             } else {
                 console.log("user registiration failed")
+                
             }
         } catch (error) {
             console.log("error during registiration: ", error);

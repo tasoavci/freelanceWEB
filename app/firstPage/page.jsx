@@ -1,3 +1,4 @@
+// firstPage/page.jsx
 "use client";
 import Image from 'next/image'
 import { motion } from 'framer-motion';
@@ -18,10 +19,13 @@ export default function Home() {
   };
   const handleDiv1Change = () => {
     setSelectedOption('option1')
+    
   }
   const handleDiv2Change = () => {
     setSelectedOption('option2')
+    
   }
+ 
   
  
   return (
@@ -76,18 +80,14 @@ export default function Home() {
           )
           }
           {selectedOption === 'option1'&& (
-          <Link href={'clientRegister'} className={ActiveButton}>
-          
+            <Link href={'/clientRegister'} className={ActiveButton}>
             Create account
-          </Link>
-          )
+          </Link> )
           }
           {selectedOption === 'option2'&& (
-          <Link href={'freelanceRegister'} className={ActiveButton}>
-          
+            <Link href={'/freelanceRegister'} className={ActiveButton}>
             Create account
-          </Link>
-          )
+          </Link>)
           }
 
         </div>
