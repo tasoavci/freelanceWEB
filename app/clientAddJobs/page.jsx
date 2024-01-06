@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useUserBalance } from '@/lib/useUserBalance';
 
 const ClientAddJobs = () => {
     const router = useRouter()
@@ -15,7 +16,8 @@ const ClientAddJobs = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    const [balance,setBalance] = useState(session?.user?.balance)
+    const balance = useUserBalance(session);
+    // const [balance,setBalance] = useState(session?.user?.balance)
     console.log(balance)
     const handleNameChange = (e) => {
       setName(e.target.value);
@@ -60,7 +62,6 @@ const ClientAddJobs = () => {
             console.log("error during adding job: ", error);
 
         }
-        setBalance(balance-price)
 
     
         // UPDATE

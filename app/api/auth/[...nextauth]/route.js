@@ -38,11 +38,13 @@ const authOptions = {
     ],
     // problem fixed with callbacks
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, trigger, user }) {
+            // console.log('jwt', { token, user, trigger });
             user && (token.user = user);
             return token;
         },
         async session({ session, token }) {
+            // console.log('session', { session, token });
             session.user = token.user;
             return session;
         },

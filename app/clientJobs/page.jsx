@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useUserBalance } from '@/lib/useUserBalance';
 
 
 
@@ -15,6 +16,7 @@ const ClientJobs = () => {
     const router = useRouter()
     const [jobs, setJobs] = useState([]);
     const {data:session} = useSession()
+    const balance = useUserBalance(session, jobs);
     
     const goAddJobs = () => {
         router.push("/clientAddJobs")
@@ -94,7 +96,7 @@ const ClientJobs = () => {
                 <div className='w-2/3 mx-auto flex justify-center items-center'>
                     <button onClick={() => signOut()} className='bg-red-500 rounded-md text-2xl px-10 py-1 mb-4'>Log out</button>
                 </div>
-                <div className='absolute top-0 right-0 bg-green-500 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'>{session?.user?.balance}$</div>
+                <div className='absolute top-0 right-0 bg-green-500 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'>{balance}$</div>
                 
         </motion.div>
         </div>

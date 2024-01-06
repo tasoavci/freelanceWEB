@@ -32,15 +32,7 @@ const Login = () => {
                 setError("Invalid Credentials")
                 return; 
             }
-            if (selectedOption === ''){
-                setError("Fill the radio input correctly")
-            }
-            if (selectedOption === 'client'){
-                router.push("/dashboardClient")
-            }
-            if (selectedOption === 'freelancer'){
-                router.push("/dashboard")
-            }
+            router.push("/dashboard")
 
         } catch (error) {
             console.log(error)
@@ -78,7 +70,7 @@ const Login = () => {
                             required
                         />
                     </div>
-                    <div className='flex justify-center items-center gap-8 mb-10'>
+                    {/* <div className='flex justify-center items-center gap-8 mb-10'>
                         <div className='flex justify-center items-center gap-1'>
                     <input
                         className=''
@@ -103,7 +95,7 @@ const Login = () => {
                         Freelancer
                     </h1>
                     </div>
-                    </div>
+                    </div> */}
                     <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md w-full">
                         Login
                     </button>

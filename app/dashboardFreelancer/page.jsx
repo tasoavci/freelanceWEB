@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 const Dashboard = () => {
     const { data: session } = useSession()
-    const formattedDate = new Date(session.user.createdAt).toLocaleDateString('tr-TR');
+    const formattedDate = new Date(session?.user?.createdAt).toLocaleDateString('tr-TR');
     const router = useRouter()
     
 

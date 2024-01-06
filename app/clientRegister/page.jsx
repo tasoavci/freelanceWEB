@@ -110,7 +110,7 @@ const CreateClient = () => {
                     </button>
                     <div>
                         {/* already */}
-                        <h1 className='text-sm text-center'>Already have an account? <button onClick={() => { router.push('/Login') }} className=' underline'>Log in</button></h1>
+                        <h1 className='text-sm text-center'>Already have an account? <button onClick={() => { router.push('/login') }} className=' underline'>Log in</button></h1>
                     </div>
                     {error && (
                         <div className='bg-red-500 mt-2 px-4 py-2 text-xl rounded-md flex justify-center items-center w-2/3 mx-auto animate-pulse'>

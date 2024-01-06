@@ -2,16 +2,21 @@
 
 import { connectMongoDB } from "@/lib/mongodb";
 import User from "@/models/user";
-import { NextResponse } from "next/server";
+import { NextApiRequest } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req) {
+export async function POST(req: Request) {
   try {
-    const { id } = req.query; // Kullanıcı kimliğini alınır
+    console.log({ body: req.body });
+    const data = await req.json();
+    const { id } = data;
+    // const { id } = req.query; // Kullanıcı kimliğini alınır
     if (!id) {
       throw new Error('ID is required to fetch user balance');
     }
 
     await connectMongoDB();
+    // @ts-ignore
     const userInfo = await User.findById(id); // Kullanıcının bilgilerini veritabanından alınır
 
     if (!userInfo) {
