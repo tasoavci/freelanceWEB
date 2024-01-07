@@ -26,10 +26,12 @@ const ClientJobs = () => {
 
     //     setBalance(session.user.balance);
     // }, [session])
-    const takeTheJob = () => {
-        
-        setIsTakeJobActive(!isTakeJobActive)
-    }
+
+    // const takeTheJob = (index) => {
+    //     console.log("index: ", index)
+    //     console.log(jobs)
+    //     setIsTakeJobActive(!isTakeJobActive)
+    // }
 
     // useEffect(() => {
     //     if (!session || !session.user) return;
@@ -44,7 +46,7 @@ const ClientJobs = () => {
    
      
     const JobComplate = async (id,price) => {
-        alert("Success!")
+        // alert("Success!")
         try {
             const jobPrice = parseInt(price); // Girilen fiyatı sayıya dönüştürün
             // const currentBalance = parseInt(session?.user?.balance); // Mevcut bakiyeyi sayıya dönüştürün
@@ -140,6 +142,16 @@ const ClientJobs = () => {
               console.log(jobs)
         }
       }, [search, jobs]);
+      const [isTakeJobActiveArray, setIsTakeJobActiveArray] = useState(Array(jobs.length).fill(false));
+
+// takeTheJob fonksiyonu artık index'e göre işlem yapacak
+const takeTheJob = (index) => {
+    
+    console.log(index)
+    const updatedTakeJobActiveArray = [...isTakeJobActiveArray]; // Mevcut durumu kopyalıyoruz
+    updatedTakeJobActiveArray[index] = !updatedTakeJobActiveArray[index]; // Tıklanan işin durumunu değiştiriyoruz
+    setIsTakeJobActiveArray(updatedTakeJobActiveArray); // Yenilenmiş durumu set ediyoruz
+};
     
     return (
         <div className='flex items-center justify-center h-screen w-full'>
@@ -172,37 +184,46 @@ const ClientJobs = () => {
     <h2 className="text-white text-2xl font-bold mb-4 flex justify-center items-center">Jobs:</h2>
     <ul className="text-white">
 
-        {!filteredJobs && jobs.map((job) => (
+        {!filteredJobs && jobs.map((job,index) => (
             <li key={job._id} className="bg-gray-800 rounded-md p-4 my-2 relative">
                 <p className="text-xl font-semibold">Name: {job.name}</p>
                 <p className="text-lg">Description: {job.description}</p>
                 <p className="text-lg">Price: {job.price}</p>
-                {!isTakeJobActive && (
-                <button onClick={() =>takeTheJob()} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Take the Job</button>
+                {/* {!isTakeJobActive && (
+                <button id={`takeJobBtn-${index}`} onClick={() => takeTheJob(index)} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Take the Job</button>
+                )} */}
+                 {!isTakeJobActiveArray[index] && (
+                    <button onClick={() => takeTheJob(index)} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Take the Job</button>
                 )}
-                {isTakeJobActive && (
+                {/* {isTakeJobActive && (
                     <div className='flex justify-center absolute top-0 right-0'>
-                    <button onClick={() => JobComplate(job._id,job.price)} className='bg-green-700 text-white rounded-md text-xl px-4 py-1  '>I did!</button>
-                    <button onClick={() => takeTheJob()} className='bg-red-500 text-white rounded-md text-xl px-4 py-1'>Back</button>
+                    <button onClick={() => JobComplate(job._id,job.price)} id={`jobCompleteBtn-${index}`} className='bg-green-700 text-white rounded-md text-xl px-4 py-1  '>I did!</button>
+                    <button onClick={() => takeTheJob(index)} className='bg-red-500 text-white rounded-md text-xl px-4 py-1'>Back</button>
                     </div>
+                )} */}
+                {isTakeJobActiveArray[index] && (
+                <div className='flex justify-center absolute top-0 right-0'>
+                <button onClick={() => JobComplate(job._id, job.price)} className='bg-green-700 text-white rounded-md text-xl px-4 py-1  '>I did!</button>
+                <button onClick={() => takeTheJob(index)} className='bg-red-500 text-white rounded-md text-xl px-4 py-1'>Back</button>
+                </div>
                 )}
             </li>)
         )}
         {(
-        filteredJobs.map((job) => (
+        filteredJobs.map((job,index) => (
                 <li key={job._id} className="bg-gray-800 rounded-md p-4 my-2 relative">
                     <p className="text-xl font-semibold">Name: {job.name}</p>
                     <p className="text-lg">Description: {job.description}</p>
                     <p className="text-lg">Price: {job.price}</p>
-                    {!isTakeJobActive && (
-                    <button onClick={() =>takeTheJob()} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Take the Job</button>
-                    )}
-                    {isTakeJobActive && (
-                        <div className='flex justify-center absolute top-0 right-0'>
-                        <button onClick={() => JobComplate(job._id,job.price)} className='bg-green-700 text-white rounded-md text-xl px-4 py-1  '>I did!</button>
-                        <button onClick={() => takeTheJob()} className='bg-red-500 text-white rounded-md text-xl px-4 py-1'>Back</button>
-                        </div>
-                    )}
+                    {!isTakeJobActiveArray[index] && (
+                    <button id={`takeJobBtn-${index}`} onClick={() => takeTheJob(index)} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Take the Job</button>
+                )}
+                    {isTakeJobActiveArray[index] && (
+                <div className='flex justify-center absolute top-0 right-0'>
+                <button onClick={() => JobComplate(job._id, job.price)} id={`jobCompleteBtn-${index}`} className='bg-green-700 text-white rounded-md text-xl px-4 py-1  '>I did!</button>
+                <button onClick={() => takeTheJob(index)} className='bg-red-500 text-white rounded-md text-xl px-4 py-1'>Back</button>
+                </div>
+                )}
                 </li>))
 
         )}
