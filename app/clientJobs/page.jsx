@@ -49,6 +49,8 @@ const ClientJobs = () => {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
+                
+
                 setJobs(data);
                 
             } catch (error) {
@@ -59,7 +61,21 @@ const ClientJobs = () => {
         fetchJobs();
     }, []);
     
-    
+    let owner = null;
+
+    if (jobs && jobs.length > 0 && jobs[0] && jobs[0].ownerId) {
+        owner = jobs[0].ownerId;
+     
+    // jobs[0].ownerId içindeki işlemleri gerçekleştirin
+    } else {
+    console.log('Jobs dizisi boş veya ownerId içermiyor.');
+    }
+    // console.log("owner: ",owner)
+    // console.log("session: ",session?.user?._id)
+    const filteredJobs = jobs.filter(job => job.ownerId === session?.user?._id);
+    console.log(filteredJobs)
+    const condition = owner === session?.user?._id ? true : false;
+
     return (
         <div className='flex items-center justify-center h-screen w-full'>
         
@@ -74,23 +90,21 @@ const ClientJobs = () => {
                 
                 <button onClick={goAddJobs} className='bg-green-500 px-4 py-2 rounded-xl'> <span className='text-2xl bg-green-500 rounded-xl p-3 py-1 text-center'>+</span> Add Job</button>
                 
-                {jobs.length !== 0 && (
-                <div>
-    <h2 className="text-white text-2xl font-bold mb-4 flex justify-center items-center">Jobs:</h2>
-    
-    <ul className="text-white">
-        {jobs.map((job) => (
-            <li key={job._id} className="bg-gray-800 rounded-md p-4 my-2 relative">
+                {filteredJobs.length !== 0 && (
+        <div>
+          <h2 className="text-white text-2xl font-bold mb-4 flex justify-center items-center">Jobs:</h2>
+          <ul className="text-white">
+            {filteredJobs.map((job) => (
+              <li key={job._id} className="bg-gray-800 rounded-md p-4 my-2 relative">
                 <p className="text-xl font-semibold">Name: {job.name}</p>
                 <p className="text-lg">Description: {job.description}</p>
                 <p className="text-lg">Price: {job.price}</p>
                 <button onClick={() => deleteJob(job._id)} className='bg-red-500 text-white rounded-md text-2xl px-4 py-1 absolute top-0 right-0 '>X</button>
-                
-            </li>
-        ))}
-    </ul>
-</div>
-    )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
                     
                 <div className='w-2/3 mx-auto flex justify-center items-center'>

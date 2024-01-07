@@ -47,7 +47,9 @@ const ClientAddJobs = () => {
                 body: JSON.stringify({
                     name,
                     description,
-                    price
+                    price,
+                    // burasi yeni eklendi
+                    ownerId:session?.user?._id
                 })
             })
             if (res.ok) {
