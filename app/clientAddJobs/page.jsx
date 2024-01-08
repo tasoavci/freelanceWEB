@@ -31,7 +31,9 @@ const ClientAddJobs = () => {
       setPrice(e.target.value);
     };
     
-
+    const handleGoBack = () => {
+      router.back(); 
+    };
     
     const handleSubmit = async(e) => {
         e.preventDefault()
@@ -166,12 +168,21 @@ const ClientAddJobs = () => {
 
                               
                     
-                <div className='w-2/3 mx-auto flex justify-center items-center'>
-                <button onClick={() => signOut()} className='rounded-md text-xl px-10 py-1 mb-4' style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}>
-                Log out
-                </button>
-                </div>
-
+<div className='w-2/3 mx-auto flex flex-col items-center'>
+  <button
+    onClick={() => signOut()}
+    className='rounded-md text-xl px-10 py-1 mb-2'
+    style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}
+  >
+    Log out
+  </button>
+  <button
+    onClick={handleGoBack}
+    className='bg-gray-700 text-white px-8 py-2 rounded-md'
+  >
+    Go back
+  </button>
+</div>
                 <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
 
         </motion.div>

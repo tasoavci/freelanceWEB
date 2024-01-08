@@ -37,6 +37,9 @@ const ViewBidsClient = () => {
       
         fetchJobs();
       }, []);
+      const handleGoBack = () => {
+        router.back(); 
+      };
       const deleteJob = async (id) => {
         console.log(id)
         try {
@@ -49,6 +52,7 @@ const ViewBidsClient = () => {
             });            if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+            
             const updatedJobs = jobs.filter((job) => job._id !== id);
             setJobs(updatedJobs);
         } catch (error) {
@@ -91,10 +95,20 @@ const ViewBidsClient = () => {
                 
         
             
-        <div className='w-2/3 mx-auto flex justify-center items-center'>
-        <button onClick={() => signOut()} className='rounded-md text-2xl px-10 py-1 mb-4' style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}>
-        Log out
-        </button>        </div>
+        <div className='flex gap-4 justify-center'>
+        <button
+    onClick={() => signOut()}
+    className='rounded-md text-xl px-10 py-1'
+    style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}
+  >
+    Log out
+  </button>
+  <button
+    onClick={handleGoBack}
+    className='bg-gray-700 text-white px-8 py-2 rounded-md'
+  >
+    Go back
+  </button>       </div>
         <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
 </motion.div>
 </div>
