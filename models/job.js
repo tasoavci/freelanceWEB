@@ -14,11 +14,18 @@ const JobSchema = new Schema({
         type: Number,
         required: true,
     },
-    // burasi yeni eklendi
     ownerId: {
         type: String,
         required: true,
     },
+    bid: {
+        type: Boolean,
+        required:true,
+    },
+    bidAmount: {
+        type: Number,
+        required:true,
+    }
     
 }, { timestamps: true })
 

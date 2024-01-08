@@ -48,8 +48,9 @@ const ClientAddJobs = () => {
                     name,
                     description,
                     price,
-                    // burasi yeni eklendi
-                    ownerId:session?.user?._id
+                    ownerId:session?.user?._id,
+                    bid:false,
+                    bidAmount:0,
                 })
             })
             if (res.ok) {

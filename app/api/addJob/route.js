@@ -7,19 +7,47 @@ export async function POST(req) {
     try {
         const body = await req.json();
         // ownerId eklendi
-        const { name,description,price,ownerId } = body
+        const { name,description,price,ownerId,bid,bidAmount } = body
      
         // console.log('Received data:', body);
         
         await connectMongoDB();
         // ownerId eklendi
-        await Job.create({ name,description,price,ownerId })
+        await Job.create({ name,description,price,ownerId,bid,bidAmount })
         
         return NextResponse.json({ message: "Job added" }, { status: 201 })
     } catch (error) {
         return NextResponse.json({ message: "An error occured while adding job" }, { status: 500 })
     }
 }
+export async function PUT(req) {
+        
+    try {
+        const urlParams = new URLSearchParams(req.url.split('?')[1]);
+        const jobId = urlParams.get('id');
+        const { bid, bidAmount } = await req.json();
+        // console.log(req.body)
+        await connectMongoDB();
+        
+
+        // jobId'e sahip işi bul ve güncelle
+        const updatedJob = await Job.findByIdAndUpdate(
+            jobId,
+            { bid: bid, bidAmount: bidAmount },
+            { new: true }
+        );
+
+        if (!updatedJob) {
+            return NextResponse.json({ message: "Job not found" }, { status: 404 });
+        }
+
+        return NextResponse.json({ message: "Job updated", updatedJob }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ message: "An error occurred while updating job" }, { status: 500 });
+    }
+}
+
+
 export async function GET(req) {
     try {
         const data = req.json()

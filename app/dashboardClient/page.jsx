@@ -30,9 +30,12 @@ const Dashboard = () => {
             <h1 className='text-xl'>Email: {session?.user?.email}</h1>
             <h1 className='text-xl'>Account created at: {formattedDate}</h1>
         </div>
-        <div className='flex justify-center items-center '>
-            <button onClick={goAddJobs} className='rounded-md bg-blue-500 px-4 py-2 text-2xl'>
+        <div className='flex justify-center items-center w-full gap-4'>
+            <button onClick={goAddJobs} className='rounded-md bg-blue-500 px-4 py-2 text-2xl '>
                 Start add jobs 
+            </button>
+            <button onClick={()=> router.push("/viewBidsClient")} className='rounded-md bg-green-500 px-4 py-2 text-2xl'>
+                View Your Bids
             </button>
         </div>
             
