@@ -251,8 +251,7 @@ const ClientJobs = () => {
                 
             </li>)
         )}
-        
-{(
+ {(
     filteredJobs.map((job,index) => (
        <li key={job._id} className="bg-gray-800 rounded-md p-4 my-2 relative">
            <p className="text-xl font-semibold">Name: {job.name}</p>
@@ -268,7 +267,7 @@ const ClientJobs = () => {
 
            )}
            {isTakeJobActiveArray[index] && (
-       <div className='flex justify-center absolute top-0 right-0'>
+       <div className='flex flex-col justify-center absolute top-0 right-0'>
        <button onClick={() => GiveBidMenu()} id={`jobCompleteBtn-${index}`} className='bg-green-700 text-white rounded-md text-xl px-4 py-1  '>Give Bid!</button>
        <button onClick={() => takeTheJob(index)} className='bg-red-500 text-white rounded-md text-xl px-4 py-1'>Back</button>
        </div>
@@ -308,7 +307,7 @@ const ClientJobs = () => {
         <button onClick={() => signOut()} className='rounded-md text-xl px-10 py-1 mb-4' style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}>
         Log out
         </button>        </div>
-        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
+        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
 
         </motion.div>
         </div>
