@@ -58,40 +58,44 @@ const ViewBidsClient = () => {
       
 
   return (
-<div className='flex items-center justify-center h-screen w-full'>
+<div className='flex flex-col gap-16 items-center justify-center h-screen w-full text-[#E3E2DF] global-background'>
 
 <motion.div
-    initial={{ y: '100vw' }}
-    animate={{ y: 0 }}
-    transition={{ type: 'spring', stiffness: 120 }}
-    className='w-[60%] h-[60%] border border-slate-400 rounded-2xl shadow-slate-500 relative shadow flex flex-col justify-between p-5 items-center '>
+        initial={{ y: '-50vw' }}
+        animate={{ y: 0 }}
+        transition={{ type: 'spring', stiffness: 120 }}
+        className='w-[50%] h-[70%] border-2 border-[#9A1750] bg-[#222629] rounded-2xl shadow-[#5D001E] relative shadow-lg flex flex-col justify-between p-5 items-center'>
         <div className='p-3 flex justify-center items-center w-full'>
             <h1 className='text-3xl font-bold'>Active Bids:</h1>
         </div>
         <div>
-        {
-        jobs.map((job,index) => (
-            <li key={job._id} className="bg-gray-800 rounded-md p-4 my-2 relative">
-                <p className="text-xl font-semibold">Name: {job.name}</p>
-                <p className="text-lg">Description: {job.description}</p>
-                <p className="text-lg">Price: {job.price}</p>
-                <p className="text-lg">Bid Amount: {job.bidAmount}</p>
-                
-                <div className='absolute top-0 right-0 flex '>
-                <button onClick={() => deleteJob(job._id)} className='bg-green-500 px-2 py-1'>Accept</button>
-                <button onClick={() => deleteJob(job._id)} className='bg-red-500 px-2 py-1'>Decline</button>
-                </div>
-            </li>))}
-                
-            </div>
+  {jobs.map((job, index) => (
+    <div key={job._id} className="flex items-center my-2">
+      <li className="flex-grow bg-gray-600 rounded-md p-4 relative">
+        <p className="text-xl font-semibold">Name: {job.name}</p>
+        <p className="text-lg">Description: {job.description}</p>
+        <p className="text-lg">Price: {job.price}</p>
+        <p className="text-lg">Bid Amount: {job.bidAmount}</p>
+      </li>
+      
+      <div className='flex flex-col ml-4'>
+        <button onClick={() => deleteJob(job._id)} className='green-button mb-2 px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:bg-green-600'>Accept</button>
+        <button onClick={() => deleteJob(job._id)} className='red-button px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:bg-red-600'>Decline</button>
+      </div>
+    </div>
+  ))}
+</div>
+
+
                 
                 
         
             
         <div className='w-2/3 mx-auto flex justify-center items-center'>
-            <button onClick={() => signOut()} className='bg-red-500 rounded-md text-2xl px-10 py-1 mb-4'>Log out</button>
-        </div>
-        <div className='absolute top-0 right-0 bg-green-500 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'>Balance: {session?.user?.balance}$</div>
+        <button onClick={() => signOut()} className='rounded-md text-2xl px-10 py-1 mb-4' style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}>
+        Log out
+        </button>        </div>
+        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
 </motion.div>
 </div>
   )

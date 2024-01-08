@@ -56,42 +56,39 @@ const ClientJobs = () => {
 
 
         try {
-            // Burada API çağrısı yapılmalı ve veritabanındaki işlem gerçekleştirilmeli
             const response = await fetch(`/api/addJob?id=${id}`, {
-                method: 'PUT', // Örnek olarak bir PUT isteği gönderiyorum, sizin API'nize göre değişebilir
+                method: 'PUT', 
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    bid: true, // job.bid true olarak güncellenmeli
-                    bidAmount: bidAmount, // job.bidAmount güncellenmeli
+                    bid: true, 
+                    bidAmount: bidAmount, 
                 }),
             });
     
             const data = await response.json();
             console.log("asdasdasd: ",data);
             
-            // Burada veritabanı güncellendikten sonra sayfayı yenileyebilirsiniz ya da başka bir işlem yapabilirsiniz
-            GiveBidMenu(); // Bid işlemi tamamlandıktan sonra menüyü kapatabilirsiniz
+            GiveBidMenu(); 
         } catch (error) {
             console.error('Veritabanı Güncelleme Hatası:', error);
         }
         
     };
-        // İşlemler burada gerçekleştirilebilir, örneğin API çağrısı yapılabilir.
-        // Ayrıca, bid işlemleri için gerekli kontroller burada yapılabilir.
-        ; // Bid işlemi tamamlandıktan sonra menüyü kapatabilirsiniz.
+        
+        ; 
     
 
     const JobComplete = async (id,price) => {
         // alert("Success!")
         try {
-            const jobPrice = parseInt(price); // Girilen fiyatı sayıya dönüştürün
-            // const currentBalance = parseInt(session?.user?.balance); // Mevcut bakiyeyi sayıya dönüştürün
-            const currentBalance = parseInt(balance); // Mevcut bakiyeyi sayıya dönüştürün
+            const jobPrice = parseInt(price); 
+          
+            const currentBalance = parseInt(balance); 
     
             if (!isNaN(jobPrice) && !isNaN(currentBalance)) {
-                const updatedBalance = currentBalance + jobPrice; // Fiyatı mevcut bakiyeden çıkarın
+                const updatedBalance = currentBalance + jobPrice; 
                 const res = await fetch('/api/updateBalance', {
                     method: "PUT",
                     headers: {
@@ -129,7 +126,7 @@ const ClientJobs = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ id }) // Request body içerisine parametreyi ekliyoruz
+                body: JSON.stringify({ id }) 
             });            if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -148,7 +145,7 @@ const ClientJobs = () => {
     useEffect(() => {
         const fetchJobs = async () => {
             try {
-                const response = await fetch('/api/addJob'); // Endpoint'iniz buraya gelmeli
+                const response = await fetch('/api/addJob'); 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -184,23 +181,22 @@ const ClientJobs = () => {
       const seeBidsFreelancer = () => {
         router.push("/viewBidsFreelancer")
       }
-// takeTheJob fonksiyonu artık index'e göre işlem yapacak
     const takeTheJob = (index) => {
     
         console.log(index)
-        const updatedTakeJobActiveArray = [...isTakeJobActiveArray]; // Mevcut durumu kopyalıyoruz
-        updatedTakeJobActiveArray[index] = !updatedTakeJobActiveArray[index]; // Tıklanan işin durumunu değiştiriyoruz
-        setIsTakeJobActiveArray(updatedTakeJobActiveArray); // Yenilenmiş durumu set ediyoruz
+        const updatedTakeJobActiveArray = [...isTakeJobActiveArray]; 
+        updatedTakeJobActiveArray[index] = !updatedTakeJobActiveArray[index]; 
+        setIsTakeJobActiveArray(updatedTakeJobActiveArray); 
     };
     
     return (
-        <div className='flex items-center justify-center h-screen w-full'>
+<div className='flex flex-col gap-16 items-center justify-center h-screen w-full text-[#E3E2DF] global-background'>
         
-        <motion.div
-            initial={{ y: '100vw' }}
-            animate={{ y: 0 }}
-            transition={{ type: 'spring', stiffness: 120 }}
-            className='w-[60%] h-[60%] border border-slate-400 rounded-2xl shadow-slate-500 relative shadow flex flex-col justify-between p-5 items-center'>
+<motion.div
+        initial={{ y: '-50vw' }}
+        animate={{ y: 0 }}
+        transition={{ type: 'spring', stiffness: 120 }}
+        className='w-[50%] h-[70%] border-2 border-[#9A1750] bg-[#222629] rounded-2xl shadow-[#5D001E] relative shadow-lg flex flex-col justify-between p-5 items-center'>
                 
                     
                 <form onSubmit={handleSearch} className='w-full flex items-center justify-center gap-2'>
@@ -208,10 +204,12 @@ const ClientJobs = () => {
                             value ={search}
                             type='search' 
                             placeholder='Search Jobs...'
-                            className='text-white rounded-lg bg-gray-500 text-3xl'>
+                            className='text-white font-bold rounded-lg bg-gray-700 text-2xl'
+                            style={{ border: '2px solid #9A1750' }} >
+                                
 
                     </input>
-                    <button type='submit' className='bg-blue-500 rounded-md px-2 py-1'>Search</button>
+                    <button type='submit' className='bg-blue-600 hover:bg-blue-700 rounded-md px-2 py-1'>Search</button>
 
                 </form>
                
@@ -253,62 +251,64 @@ const ClientJobs = () => {
                 
             </li>)
         )}
-        {(
-        filteredJobs.map((job,index) => (
-                <li key={job._id} className="bg-gray-800 rounded-md p-4 my-2 relative">
-                    <p className="text-xl font-semibold">Name: {job.name}</p>
-                    <p className="text-lg">Description: {job.description}</p>
-                    <p className="text-lg">Price: {job.price}</p>
-                    <p className="text-lg">Bid Status: {job.bid ? "True" : "False"}</p>
-                    <p className="text-lg">Bid Amount: {job.bidAmount}</p>
-                    {!isTakeJobActiveArray[index] && !job.bid && (
-                    <button id={`takeJobBtn-${index}`} onClick={() => takeTheJob(index)} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Take the Job</button>
-                    )}
-                    {job.bid && (
-                        <button id={`takeJobBtn-${index}`} onClick={() => JobComplete(job._id,job.price)} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Complete!</button>
+        
+{(
+    filteredJobs.map((job,index) => (
+       <li key={job._id} className="bg-gray-800 rounded-md p-4 my-2 relative">
+           <p className="text-xl font-semibold">Name: {job.name}</p>
+           <p className="text-lg">Description: {job.description}</p>
+           <p className="text-lg">Price: {job.price}</p>
+           <p className="text-lg">Bid Status: {job.bid ? "True" : "False"}</p>
+           <p className="text-lg">Bid Amount: {job.bidAmount}</p>
+           {!isTakeJobActiveArray[index] && !job.bid && (
+           <button id={`takeJobBtn-${index}`} onClick={() => takeTheJob(index)} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Take the Job</button>
+           )}
+           {job.bid && (
+               <button id={`takeJobBtn-${index}`} onClick={() => JobComplete(job._id,job.price)} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Complete!</button>
 
-                    )}
-                    {isTakeJobActiveArray[index] && (
-                <div className='flex justify-center absolute top-0 right-0'>
-                <button onClick={() => GiveBidMenu()} id={`jobCompleteBtn-${index}`} className='bg-green-700 text-white rounded-md text-xl px-4 py-1  '>Give Bid!</button>
-                <button onClick={() => takeTheJob(index)} className='bg-red-500 text-white rounded-md text-xl px-4 py-1'>Back</button>
-                </div>
+           )}
+           {isTakeJobActiveArray[index] && (
+       <div className='flex justify-center absolute top-0 right-0'>
+       <button onClick={() => GiveBidMenu()} id={`jobCompleteBtn-${index}`} className='bg-green-700 text-white rounded-md text-xl px-4 py-1  '>Give Bid!</button>
+       <button onClick={() => takeTheJob(index)} className='bg-red-500 text-white rounded-md text-xl px-4 py-1'>Back</button>
+       </div>
+       )}
+          {giveBidMenu && (
+       <>
+           <div onClick={() => GiveBidMenu()} className="fixed inset-0 bg-black/90 rounded-xl"></div>
+           <div className="fixed z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+               <div className="bg-gray-700 p-4 rounded-lg">
+                   <input
+                       type="number"
+                       value={bidAmount}
+                       onChange={handleInputChange}
+                       className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-800"
+                       placeholder="Bid Amount"
+                       name="bidAmount"
+                   />
+                   <button
+                       onClick={()=>handleSubmitBid(job._id,bidAmount)}
+                       className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md w-full mx-auto"
+                   >
+                       Give Bid
+                   </button>
+               </div>
+           </div>
+       </>
+   )}
+       </li>))
                 )}
-                   {giveBidMenu && (
-                <>
-                    <div onClick={() => GiveBidMenu()} className="fixed inset-0 bg-black/90 rounded-xl"></div>
-                    <div className="fixed z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                        <div className="bg-gray-700 p-4 rounded-lg">
-                            <input
-                                type="number"
-                                value={bidAmount}
-                                onChange={handleInputChange}
-                                className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-800"
-                                placeholder="Bid Amount"
-                                name="bidAmount"
-                            />
-                            <button
-                                onClick={()=>handleSubmitBid(job._id,bidAmount)}
-                                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md w-full mx-auto"
-                            >
-                                Give Bid
-                            </button>
-                        </div>
-                    </div>
-                </>
-            )}
-                </li>))
 
-                     )}
                     </ul>
                 </div>
             )}
 
                     
-                <div className='w-2/3 mx-auto flex justify-center items-center'>
-                    <button onClick={() => signOut()} className='bg-red-500 rounded-md text-2xl px-10 py-1 mb-4'>Log out</button>
-                </div>
-                <div className='absolute top-0 right-0 bg-green-500 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'>{balance}$</div>
+<div className='w-2/3 mx-auto flex justify-center items-center'>
+        <button onClick={() => signOut()} className='rounded-md text-xl px-10 py-1 mb-4' style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}>
+        Log out
+        </button>        </div>
+        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
 
         </motion.div>
         </div>

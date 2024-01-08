@@ -67,13 +67,14 @@ const CreateFreelancer = () => {
         }
     };
     return (
-        <div className='flex items-center justify-center h-screen w-full'>
+        <div   className='flex flex-col gap-16 items-center justify-center h-screen w-full text-[#E3E2DF] global-background'>
 
-            <motion.div
-                initial={{ y: '-100vw' }}
-                animate={{ y: 0 }}
-                transition={{ type: 'spring', stiffness: 120 }}
-                className='w-[60%] h-[60%] border border-slate-400 rounded-2xl shadow-slate-500 relative shadow flex flex-col justify-between p-5 items-center'>
+
+<motion.div
+        initial={{ y: '-50vw' }}
+        animate={{ y: 0 }}
+        transition={{ type: 'spring', stiffness: 120 }}
+        className='w-[50%] h-[70%] border-2 border-[#9A1750] bg-[#222629] rounded-2xl shadow-[#5D001E] relative shadow-lg flex flex-col justify-between p-5 items-center'>
 
                 <form onSubmit={handleSubmit} className="w-2/3">
                     <h2 className="text-3xl mb-4 font-bold text-center">Sign Up to find work you love</h2>
@@ -85,6 +86,7 @@ const CreateFreelancer = () => {
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
                             className="w-full px-4 py-2 border rounded-md bg-gray-700"
+                            style={{ border: '2px solid #9A1750' }} 
                             required
                         />
                     </div>
@@ -96,6 +98,7 @@ const CreateFreelancer = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full px-4 py-2 border rounded-md bg-gray-700"
+                            style={{ border: '2px solid #9A1750' }} 
                             required
                         />
                     </div>
@@ -107,11 +110,15 @@ const CreateFreelancer = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="w-full px-4 py-2 border rounded-md bg-gray-700"
+                            style={{ border: '2px solid #9A1750' }} 
                             required
                         />
                     </div>
-                    <button type="submit" className="bg-blue-500 mb-4 text-white flex justify-center items-center w-full px-4 py-2 rounded-md">
-                        Sign Up
+                    <button
+                    type="submit"
+                    className="custom-button"
+                    >
+                    Sign Up
                     </button>
                     <div>
                         {/* already */}

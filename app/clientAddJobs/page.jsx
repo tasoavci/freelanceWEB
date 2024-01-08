@@ -102,22 +102,22 @@ const ClientAddJobs = () => {
       
    
     return (
-        <div className='flex items-center justify-center h-screen w-full'>
+<div className='flex flex-col gap-16 items-center justify-center h-screen w-full text-[#E3E2DF] global-background'>
         
-        <motion.div
-            initial={{ y: '100vw' }}
-            animate={{ y: 0 }}
-            transition={{ type: 'spring', stiffness: 120 }}
-            className='w-[60%] h-[60%] border border-slate-400 rounded-2xl shadow-slate-500 relative shadow flex flex-col justify-between p-5 items-center'>
+<motion.div
+        initial={{ y: '-50vw' }}
+        animate={{ y: 0 }}
+        transition={{ type: 'spring', stiffness: 120 }}
+        className='w-[50%] h-[70%] border-2 border-[#9A1750] bg-[#222629] rounded-2xl shadow-[#5D001E] relative shadow-lg flex flex-col justify-between p-5 items-center'>
                 <div className='pt-3 flex justify-center items-center w-full'>
                     <h1 className='text-3xl font-bold'>Welcome Client!</h1>
                 </div>
 
                 <div className="max-w-md mx-auto mt-10">
-                    <h1 className='text-4xl text-center'>Add job:</h1>
+                    <h1 className='text-2xl text-center font-bold'>Add job:</h1>
   <form onSubmit={handleSubmit} className="space-y-4">
     <div>
-      <label htmlFor="name" className="block text-gray-700">
+      <label htmlFor="name" className="block">
         Name:
       </label>
       <input
@@ -125,11 +125,12 @@ const ClientAddJobs = () => {
         id="name"
         value={name}
         onChange={handleNameChange}
-        className="border border-gray-300 rounded-md w-full py-2 px-3 mt-1 text-black"
+        className="border rounded-md w-full py-2 px-3 mt-1 text-black bg-gray-700"
+        style={{ border: '2px solid #9A1750' }}
       />
     </div>
     <div>
-      <label htmlFor="description" className="block text-gray-700">
+      <label htmlFor="description" className="block">
         Description:
       </label>
       <input
@@ -137,11 +138,12 @@ const ClientAddJobs = () => {
         id="description"
         value={description}
         onChange={handleDescriptionChange}
-        className="border border-gray-300 rounded-md w-full py-2 px-3 mt-1 text-black"
+        className="border rounded-md w-full py-2 px-3 mt-1 text-black bg-gray-700"
+        style={{ border: '2px solid #9A1750' }}
       />
     </div>
     <div>
-      <label htmlFor="price" className="block text-gray-700">
+      <label htmlFor="price" className="block">
         Price:
       </label>
       <input
@@ -149,12 +151,13 @@ const ClientAddJobs = () => {
         id="price"
         value={price}
         onChange={handlePriceChange}
-        className="border border-gray-300 rounded-md w-full py-2 px-3 mt-1 text-black"
+        className="border rounded-md w-full py-2 px-3 mt-1 text-black bg-gray-700"
+        style={{ border: '2px solid #9A1750' }}
       />
     </div>
     <button
       type="submit"
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex w-full justify-center items-center"
+      className="blue-button text-white font-bold py-2 px-4 rounded flex w-full justify-center items-center"
     >
       Submit
     </button>
@@ -164,10 +167,12 @@ const ClientAddJobs = () => {
                               
                     
                 <div className='w-2/3 mx-auto flex justify-center items-center'>
-                    <button onClick={() => signOut()} className='bg-red-500 rounded-md text-2xl px-10 py-1 mb-4'>Log out</button>
+                <button onClick={() => signOut()} className='rounded-md text-xl px-10 py-1 mb-4' style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}>
+                Log out
+                </button>
                 </div>
 
-                <div className='absolute top-0 right-0 bg-green-500 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'>Balance: {balance}$</div>
+                <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
 
         </motion.div>
         </div>
