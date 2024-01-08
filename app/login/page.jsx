@@ -117,7 +117,7 @@ const Login = () => {
                     )}
                 </form>
 
-                   <h1>Don't you have an account?  <Link href={"/firstPage"} className=" underline">Create one!</Link></h1>
+                   <h1>Don't you have an account?  <Link href={"/"} className=" underline">Create one!</Link></h1>
             </motion.div>
         </div>
     )

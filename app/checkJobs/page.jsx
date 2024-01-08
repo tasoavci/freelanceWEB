@@ -198,7 +198,7 @@ const ClientJobs = () => {
         initial={{ y: '-50vw' }}
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 120 }}
-        className='w-[50%] h-[70%] border-2 border-[#9A1750] bg-[#222629] rounded-2xl shadow-[#5D001E] relative shadow-lg flex flex-col justify-between p-5 items-center'>
+        className='w-[50%] min-h-[70%] border-2 border-[#9A1750] bg-[#222629] rounded-2xl shadow-[#5D001E] relative shadow-lg flex flex-col justify-between p-5 items-center'>
                 
                     
                 <form onSubmit={handleSearch} className='w-full flex items-center justify-center gap-2'>
@@ -223,7 +223,7 @@ const ClientJobs = () => {
                 {jobs.length !== 0 && (
 
                 
-                <div>
+                <div className='min-w-[60%]'>
                     <h2 className="text-white text-2xl font-bold mb-4 flex justify-center items-center">Jobs:</h2>
                     <ul className="text-white">
 
@@ -255,7 +255,7 @@ const ClientJobs = () => {
         )}
  {(
     filteredJobs.map((job,index) => (
-       <li key={job._id} className="bg-gray-800 rounded-md p-4 my-2 relative">
+       <li key={job._id} className="bg-gray-700 rounded-md p-4 my-2 relative">
            <p className="text-xl font-semibold">Name: {job.name}</p>
            <p className="text-lg">Description: {job.description}</p>
            <p className="text-lg">Price: {job.price}</p>
@@ -305,7 +305,7 @@ const ClientJobs = () => {
             )}
 
                     
-<div className='w-2/3 mx-auto flex flex-col gap-2 items-center'>
+<div className='w-2/3 mx-auto flex justify-center mt-2 gap-2 items-center'>
   <button
     onClick={() => signOut()}
     className='rounded-md text-xl px-10 py-2'
@@ -315,11 +315,12 @@ const ClientJobs = () => {
   </button>
   <button
     onClick={handleGoBack}
-    className='bg-gray-700 text-white px-8 py-2 rounded-md'
+    className='bg-gray-700 text-white px-10 text-xl py-2 rounded-md'
   >
     Go back
     
-  </button>    </div>
+  </button>    
+  </div>
         <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
 
         </motion.div>

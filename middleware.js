@@ -3,7 +3,7 @@ import { withAuth } from "next-auth/middleware"
 import { NextResponse } from "next/server";
 // export { default } from 'next-auth/middleware'
 
-const guestPages = ['/login', '/firstPage', 'freelanceRegister', 'clientRegister'];
+const guestPages = ['/login', '/', 'freelanceRegister', 'clientRegister'];
 const userPages = ['/dashboard', '/dashboardClient', '/dashboardFreelancer', '/clientAddJobs', '/clientJobs', '/checkJobs']
 
 const isGuestPage = (url) => {
