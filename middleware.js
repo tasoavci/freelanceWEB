@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 // export { default } from 'next-auth/middleware'
 
 const guestPages = ['/login', '/', 'freelanceRegister', 'clientRegister'];
-const userPages = ['/dashboard', '/dashboardClient', '/dashboardFreelancer', '/clientAddJobs', '/clientJobs', '/checkJobs']
+const userPages = ['/dashboard', '/dashboardClient', '/dashboardFreelancer', '/clientAddJobs', '/clientJobs', '/checkJobs', '/viewBidClient']
 
 const isGuestPage = (url) => {
   return guestPages.some(x => url.startsWith(x));

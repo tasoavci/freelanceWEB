@@ -73,7 +73,7 @@ const ClientAddJobs = () => {
         // UPDATE
         try {
         const jobPrice = parseInt(price); // Girilen fiyatı sayıya dönüştürün
-        const currentBalance = parseInt(session?.user?.balance); // Mevcut bakiyeyi sayıya dönüştürün
+        const currentBalance = parseInt(balance); // Mevcut bakiyeyi sayıya dönüştürün
 
         if (!isNaN(jobPrice) && !isNaN(currentBalance)) {
             const updatedBalance = currentBalance - jobPrice; // Fiyatı mevcut bakiyeden çıkarın
@@ -184,7 +184,7 @@ const ClientAddJobs = () => {
     Go back
   </button>
 </div>
-                <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
+                <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {balance}$</div>
 
         </motion.div>
         </div>

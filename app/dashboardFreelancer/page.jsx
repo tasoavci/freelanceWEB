@@ -4,12 +4,34 @@ import React, { useState } from 'react'
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useUserBalance } from '../../lib/useUserBalance';
 
 const Dashboard = () => {
     const { data: session } = useSession()
     const formattedDate = new Date(session?.user?.createdAt).toLocaleDateString('tr-TR');
     const router = useRouter()
-    
+    const [jobs, setJobs] = useState([]);
+
+    const balance = useUserBalance(session, jobs);
+
+    useEffect(() => {
+        const fetchJobs = async () => {
+            try {
+                const response = await fetch('/api/addJob'); 
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setJobs(data);
+                console.log("jobs: ",jobs)
+            } catch (error) {
+                console.error('Error fetching jobs:', error);
+            }
+        };
+
+        fetchJobs();
+    }, []);
 
     const goCheckJobs = () =>{
         router.push("/checkJobs")
@@ -42,7 +64,7 @@ const Dashboard = () => {
         <button onClick={() => signOut()} className='rounded-md text-xl px-10 py-1 mb-4' style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}>
         Log out
         </button>        </div>
-        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
+        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {balance}$</div>
 
 </motion.div>
 </div>

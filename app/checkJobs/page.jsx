@@ -68,7 +68,7 @@ const ClientJobs = () => {
                 body: JSON.stringify({
                     bid: true, 
                     bidAmount: bidAmount, 
-                    bidDescription :bidDescription,
+                    bidDescription : bidDescription,
                 }),
             });
     
@@ -87,10 +87,14 @@ const ClientJobs = () => {
         const handleGoBack = () => {
             router.back(); // Geri gitmek için router'ın back() yöntemini kullanıyoruz
           };
-    const JobComplete = async (id,price) => {
+    const JobComplete = async (id,bidAmount) => {
         // alert("Success!")
+        if (balance< 0){
+            alert("yetersiz bakiye")
+            return;
+        }
         try {
-            const jobPrice = parseInt(price); 
+            const jobPrice = parseInt(bidAmount); 
           
             const currentBalance = parseInt(balance); 
     
@@ -270,7 +274,7 @@ const ClientJobs = () => {
            <button id={`takeJobBtn-${index}`} onClick={() => takeTheJob(index)} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Take the Job</button>
            )}
            {job.bid && (
-               <button id={`takeJobBtn-${index}`} onClick={() => JobComplete(job._id,job.price)} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Complete!</button>
+               <button id={`takeJobBtn-${index}`} onClick={() => JobComplete(job._id,job.bidAmount)} className='bg-green-500 text-white rounded-md text-xl px-4 py-1 absolute top-0 right-0 '>Complete!</button>
 
            )}
            {isTakeJobActiveArray[index] && (
@@ -296,7 +300,7 @@ const ClientJobs = () => {
                    type="text"
                    value={bidDescription}
                    onChange={handleInputChangeDescription}
-                   className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-800"
+                   className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-800 mt-3"
                    placeholder="Bid Description"
                    name="bidDescription"
                    
@@ -335,7 +339,7 @@ const ClientJobs = () => {
     
   </button>    
   </div>
-        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
+        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {balance}$</div>
 
         </motion.div>
         </div>

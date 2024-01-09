@@ -18,6 +18,12 @@ const ClientJobs = () => {
     const {data:session} = useSession()
     const balance = useUserBalance(session, jobs);
     
+    // if (balance < 0){
+    //     alert("yetersiz bakiye")
+    //     router.push("dashboardClient")
+    //     return;
+    // }
+        
     const goAddJobs = () => {
         router.push("/clientAddJobs")
     }
@@ -123,7 +129,7 @@ const ClientJobs = () => {
                     Go back
                  </button>
                 </div>
-                <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
+                <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {balance}$</div>
                 
         </motion.div>
         </div>
