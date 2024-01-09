@@ -71,37 +71,38 @@ const ClientAddJobs = () => {
 
     
         // UPDATE
-        try {
-        const jobPrice = parseInt(price); // Girilen fiyatı sayıya dönüştürün
-        const currentBalance = parseInt(balance); // Mevcut bakiyeyi sayıya dönüştürün
+    //     try {
+    //     const jobPrice = parseInt(price); // Girilen fiyatı sayıya dönüştürün
+    //     const currentBalance = parseInt(balance); // Mevcut bakiyeyi sayıya dönüştürün
 
-        if (!isNaN(jobPrice) && !isNaN(currentBalance)) {
-            const updatedBalance = currentBalance - jobPrice; // Fiyatı mevcut bakiyeden çıkarın
-            const res = await fetch('/api/updateBalance', {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    id: session?.user?._id,
-                    balance: updatedBalance
-                })
-            });
+    //     if (!isNaN(jobPrice) && !isNaN(currentBalance)) {
+    //         const updatedBalance = currentBalance - jobPrice; // Fiyatı mevcut bakiyeden çıkarın
+    //         const res = await fetch('/api/updateBalance', {
+    //             method: "PUT",
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             },
+    //             body: JSON.stringify({
+    //                 id: session?.user?._id,
+    //                 balance: updatedBalance
+    //             })
+    //         });
 
-            if (res.ok) {
-                console.log("Balance updated successfully");
-                e.target.reset();
-                router.push("/clientJobs");
-            } else {
-                console.log("Updating balance failed");
-            }
-        } else {
-            console.log("Invalid price or balance");
-        }
-    } catch (error) {
-        console.error("Error during updating balance:", error);
+    //         if (res.ok) {
+    //             console.log("Balance updated successfully");
+    //             e.target.reset();
+    //             router.push("/clientJobs");
+    //         } else {
+    //             console.log("Updating balance failed");
+    //         }
+    //     } else {
+    //         console.log("Invalid price or balance");
+    //     }
+    // } catch (error) {
+    //     console.error("Error during updating balance:", error);
     
-    };}
+    // };
+  }
       
    
     return (

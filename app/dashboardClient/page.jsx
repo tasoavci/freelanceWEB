@@ -4,14 +4,41 @@ import React from 'react'
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import {useState} from 'react'
+import { useUserBalance } from '../../lib/useUserBalance';
+import { useEffect } from 'react';
+
 
 const Dashboard = () => {
     const { data: session } = useSession()
     const formattedDate = new Date(session?.user?.createdAt).toLocaleDateString('tr-TR');
     const router = useRouter()
+    const [jobs,setJobs] = useState([])
+    const balance = useUserBalance(session, jobs);
     const goAddJobs = () =>{
         router.push("/clientJobs")
     }
+    useEffect(() => {
+        const fetchJobs = async () => {
+          try {
+            const response = await fetch('/api/addJob');
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            
+            // Filtreleme işlemi
+            const filteredJobs = data.filter(job => job.bid === true && job.ownerId === session?.user?._id);
+            
+            setJobs(filteredJobs);
+            console.log("jobs: ", jobs);
+          } catch (error) {
+            console.error('Error fetching jobs:', error);
+          }
+        };
+      
+        fetchJobs();
+      }, []);
 
   return (
 <div className='flex flex-col gap-16 items-center justify-center h-screen w-full text-[#E3E2DF] global-background'>
@@ -49,7 +76,7 @@ const Dashboard = () => {
         Log out
         </button>
         </div>
-        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
+        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {balance}$</div>
 </motion.div>
 </div>
   )

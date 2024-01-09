@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useUserBalance } from '../../lib/useUserBalance';
 
 
 const ViewBidsClient = () => {
@@ -13,6 +14,7 @@ const ViewBidsClient = () => {
     const formattedDate = new Date(session?.user?.createdAt).toLocaleDateString('tr-TR');
     const router = useRouter()
     const [jobs,setJobs] = useState([])
+    const balance = useUserBalance(session, jobs);
     const goAddJobs = () =>{
         router.push("/clientJobs")
     }
@@ -37,28 +39,62 @@ const ViewBidsClient = () => {
       
         fetchJobs();
       }, []);
+      
       const handleGoBack = () => {
         router.back(); 
       };
-      const deleteJob = async (id) => {
-        console.log(id)
-        try {
-            const response = await fetch(`/api/addJob`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id }) // Request body içerisine parametreyi ekliyoruz
-            });            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+    //   const deleteJob = async (id) => {
+    //     console.log(id)
+    //     try {
+    //         const response = await fetch(`/api/addJob`, {
+    //             method: 'DELETE',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({ id }) // Request body içerisine parametreyi ekliyoruz
+    //         });            if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
             
-            const updatedJobs = jobs.filter((job) => job._id !== id);
-            setJobs(updatedJobs);
-        } catch (error) {
-            console.error('Error deleting job:', error);
+    //         const updatedJobs = jobs.filter((job) => job._id !== id);
+    //         setJobs(updatedJobs);
+    //     } catch (error) {
+    //         console.error('Error deleting job:', error);
+    //     }
+    // };
+    const acceptJob = async(id,bidAmount) => {
+      try {
+        const jobPrice = parseInt(bidAmount); // Girilen fiyatı sayıya dönüştürün
+        const currentBalance = parseInt(balance); // Mevcut bakiyeyi sayıya dönüştürün
+
+        if (!isNaN(jobPrice) && !isNaN(currentBalance)) {
+            const updatedBalance = currentBalance - jobPrice; // Fiyatı mevcut bakiyeden çıkarın
+            const res = await fetch('/api/updateBalance', {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: session?.user?._id,
+                    balance: updatedBalance
+                })
+            });
+
+            if (res.ok) {
+                console.log("Balance updated successfully");
+                // e.target.reset();
+                router.push("/clientJobs");
+            } else {
+                console.log("Updating balance failed");
+            }
+        } else {
+            console.log("Invalid price or balance");
         }
-    };
+    } catch (error) {
+        console.error("Error during updating balance:", error);
+    
+    }
+    }
       
 
   return (
@@ -84,7 +120,7 @@ const ViewBidsClient = () => {
       </li>
       
       <div className='flex flex-col ml-4'>
-        <button onClick={() => deleteJob(job._id)} className='green-button mb-2 px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:bg-green-600'>Accept</button>
+        <button onClick={() => acceptJob(job._id,job.bidAmount)} className='green-button mb-2 px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:bg-green-600'>Accept</button>
         {/* <button onClick={() => deleteJob(job._id)} className='red-button px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:bg-red-600'>Decline</button> */}
       </div>
     </div>
@@ -110,7 +146,7 @@ const ViewBidsClient = () => {
   >
     Go back
   </button>       </div>
-        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
+        <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {balance}$</div>
 </motion.div>
 </div>
   )
