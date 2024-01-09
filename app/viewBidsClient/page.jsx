@@ -80,11 +80,12 @@ const ViewBidsClient = () => {
         <p className="text-lg">Description: {job.description}</p>
         <p className="text-lg">Price: {job.price}</p>
         <p className="text-lg">Bid Amount: {job.bidAmount}</p>
+        <p className="text-lg">Bid Description: {job.bidDescription}</p>
       </li>
       
       <div className='flex flex-col ml-4'>
         <button onClick={() => deleteJob(job._id)} className='green-button mb-2 px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:bg-green-600'>Accept</button>
-        <button onClick={() => deleteJob(job._id)} className='red-button px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:bg-red-600'>Decline</button>
+        {/* <button onClick={() => deleteJob(job._id)} className='red-button px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:bg-red-600'>Decline</button> */}
       </div>
     </div>
   ))}

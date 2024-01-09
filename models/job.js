@@ -25,6 +25,10 @@ const JobSchema = new Schema({
     bidAmount: {
         type: Number,
         required:true,
+    },
+    bidDescription: {
+        type: String,
+        required: true,
     }
     
 }, { timestamps: true })

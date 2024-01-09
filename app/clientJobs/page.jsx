@@ -75,15 +75,17 @@ const ClientJobs = () => {
     const filteredJobs = jobs.filter(job => job.ownerId === session?.user?._id);
     console.log(filteredJobs)
     const condition = owner === session?.user?._id ? true : false;
-
+    const handleGoBack = () => {
+        router.push ("/dashboardClient")
+    }
     return (
-<div className='flex flex-col gap-16 items-center justify-center h-screen w-full text-[#E3E2DF] global-background'>
+<div className='flex flex-col gap-16 items-center justify-center min-h-screen w-full text-[#E3E2DF] global-background'>
         
 <motion.div
         initial={{ y: '-50vw' }}
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 120 }}
-        className='w-[50%] h-[70%] border-2 border-[#9A1750] bg-[#222629] rounded-2xl shadow-[#5D001E] relative shadow-lg flex flex-col justify-between p-5 items-center'>
+        className='w-[50%] min-h-screen border-2 border-[#9A1750] bg-[#222629] rounded-2xl shadow-[#5D001E] relative shadow-lg flex flex-col justify-between p-5 items-center'>
                 <div className='p-3 flex justify-center items-center w-full'>
                     <h1 className='text-3xl font-bold'>Welcome Client!</h1>
                 </div>
@@ -110,10 +112,16 @@ const ClientJobs = () => {
       )}
 
                     
-                <div className='w-2/3 mx-auto flex justify-center items-center'>
-                <button onClick={() => signOut()} className='rounded-md text-2xl px-10 py-1 mb-4' style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}>
+                <div className='w-2/3 mx-auto flex justify-center items-center gap-2'>
+                <button onClick={() => signOut()} className='rounded-md text-2xl px-10 py-1 ' style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}>
                 Log out
                 </button> 
+                <button
+                    onClick={handleGoBack}
+                    className='bg-gray-700 text-white text-2xl px-10 py-1 rounded-md'
+                    >
+                    Go back
+                 </button>
                 </div>
                 <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {session?.user?.balance}$</div>
                 

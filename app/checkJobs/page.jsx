@@ -22,7 +22,7 @@ const ClientJobs = () => {
     const [search, setSearch] = useState("") 
     const [giveBidMenu,setGiveBidMenu] = useState(false)
     const [bidAmount, setBidAmount] = useState(0);
-
+    const [bidDescription,setBidDescription] = useState("")
     // useEffect(() => {
     //     if (!session || !session.user) return;
 
@@ -49,12 +49,16 @@ const ClientJobs = () => {
     setGiveBidMenu(!giveBidMenu)
    }
    
-   const handleInputChange = (e) => {
+   const handleInputChangeAmount = (e) => {
     setBidAmount(e.target.value);
     };
-    const handleSubmitBid = async (id,bidAmount) => {
+   const handleInputChangeDescription = (e) => {
+    setBidDescription(e.target.value);
+    };
+    
+    const handleSubmitBid = async (id,bidAmount,bidDescription) => {
 
-
+        console.log(bidDescription)
         try {
             const response = await fetch(`/api/addJob?id=${id}`, {
                 method: 'PUT', 
@@ -64,6 +68,7 @@ const ClientJobs = () => {
                 body: JSON.stringify({
                     bid: true, 
                     bidAmount: bidAmount, 
+                    bidDescription :bidDescription,
                 }),
             });
     
@@ -282,13 +287,22 @@ const ClientJobs = () => {
                    <input
                        type="number"
                        value={bidAmount}
-                       onChange={handleInputChange}
+                       onChange={handleInputChangeAmount}
                        className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-800"
                        placeholder="Bid Amount"
                        name="bidAmount"
                    />
+                   <input
+                   type="text"
+                   value={bidDescription}
+                   onChange={handleInputChangeDescription}
+                   className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-800"
+                   placeholder="Bid Description"
+                   name="bidDescription"
+                   
+                   />
                    <button
-                       onClick={()=>handleSubmitBid(job._id,bidAmount)}
+                       onClick={()=>handleSubmitBid(job._id,bidAmount,bidDescription)}
                        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md w-full mx-auto"
                    >
                        Give Bid

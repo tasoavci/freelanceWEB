@@ -7,13 +7,15 @@ export async function POST(req) {
     try {
         const body = await req.json();
         // ownerId eklendi
-        const { name,description,price,ownerId,bid,bidAmount } = body
-     
+        // bidDescription eklendi
+        const { name,description,price,ownerId,bid,bidAmount,bidDescription } = body
+        console.log("BODY BID: ", bidDescription)
         // console.log('Received data:', body);
         
         await connectMongoDB();
         // ownerId eklendi
-        await Job.create({ name,description,price,ownerId,bid,bidAmount })
+        // bidDescription eklendi
+        await Job.create({ name,description,price,ownerId,bid,bidAmount,bidDescription })
         
         return NextResponse.json({ message: "Job added" }, { status: 201 })
     } catch (error) {
@@ -25,7 +27,7 @@ export async function PUT(req) {
     try {
         const urlParams = new URLSearchParams(req.url.split('?')[1]);
         const jobId = urlParams.get('id');
-        const { bid, bidAmount } = await req.json();
+        const { bid, bidAmount, bidDescription } = await req.json();
         // console.log(req.body)
         await connectMongoDB();
         
@@ -33,7 +35,8 @@ export async function PUT(req) {
         // jobId'e sahip işi bul ve güncelle
         const updatedJob = await Job.findByIdAndUpdate(
             jobId,
-            { bid: bid, bidAmount: bidAmount },
+            { bid: bid, bidAmount: bidAmount, bidDescription:bidDescription,
+             },
             { new: true }
         );
 

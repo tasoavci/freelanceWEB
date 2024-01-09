@@ -53,6 +53,7 @@ const ClientAddJobs = () => {
                     ownerId:session?.user?._id,
                     bid:false,
                     bidAmount:0,
+                    bidDescription: ' ',
                 })
             })
             if (res.ok) {
