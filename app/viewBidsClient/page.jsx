@@ -63,6 +63,10 @@ const ViewBidsClient = () => {
     //     }
     // };
     const acceptJob = async(id,bidAmount) => {
+      if(balance < bidAmount){
+        alert("yetersiz bakiye")
+        return;
+      }
       try {
         const jobPrice = parseInt(bidAmount); // Girilen fiyatı sayıya dönüştürün
         const currentBalance = parseInt(balance); // Mevcut bakiyeyi sayıya dönüştürün

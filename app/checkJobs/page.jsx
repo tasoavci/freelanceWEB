@@ -15,9 +15,9 @@ const ClientJobs = () => {
     const {data:session, update} = useSession()
     const router = useRouter()
     // const [balance,setBalance] = useState(null)
-    const [jobs, setJobs] = useState([]);
     const [filteredJobs, setFilteredJobs] = useState([]);
     const [isTakeJobActive,setIsTakeJobActive] = useState(false)
+    const [jobs, setJobs] = useState([]);
     const balance = useUserBalance(session, jobs);
     const [search, setSearch] = useState("") 
     const [giveBidMenu,setGiveBidMenu] = useState(false)
