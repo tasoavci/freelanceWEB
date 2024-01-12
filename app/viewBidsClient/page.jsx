@@ -114,6 +114,7 @@ const ViewBidsClient = () => {
         </div>
         <div>
   {jobs.map((job, index) => (
+    
     <div key={job._id} className="flex items-center my-2">
       <li className="flex-grow bg-gray-600 rounded-md p-4 relative">
         <p className="text-xl font-semibold">Name: {job.name}</p>
@@ -139,17 +140,18 @@ const ViewBidsClient = () => {
         <div className='flex gap-4 justify-center'>
         <button
     onClick={() => signOut()}
-    className='rounded-md text-xl px-10 py-1'
+    className='rounded-md text-xl px-10 py-2'
     style={{ backgroundColor: 'rgba(164, 6, 6, 0.7)' }}
   >
     Log out
   </button>
   <button
     onClick={handleGoBack}
-    className='bg-gray-700 text-white px-8 py-2 rounded-md'
+    className='bg-gray-700 text-xl text-white px-10 py-2 rounded-md'
   >
     Go back
-  </button>       </div>
+  </button>       
+  </div>
         <div className='absolute top-0 right-0 px-2 py-1 rounded-tr-2xl text-2xl rounded-bl-md'style={{ backgroundColor: 'rgba(75, 163, 63, 0.7)' }}>Balance: {balance}$</div>
 </motion.div>
 </div>
